@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 
     Rigidbody rigidbody = GetComponent<Rigidbody>();
 
+    Debug.Log(x);
     // xとzに10をかけて押す力をアップ
     rigidbody.AddForce(x * 10, 0, z * 10);
 	}
