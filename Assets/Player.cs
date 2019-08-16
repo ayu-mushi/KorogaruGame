@@ -1,11 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Cameras;
 
 public class Player : MonoBehaviour {
 
-	// Use this for initialization
+  GameObject hijacked;
+  ParticleSystem ps;
+  GameObject camera;
+
 	void Start () {
+    ps = GetComponent<ParticleSystem>();
+    camera = GameObject.Find("Camera");
+	}
+	void OnParticleCollision(GameObject obj) {
+    if(obj.tag == "Mob"){
+      hijacked = obj;
+		  Debug.Log("衝突");
+      ps.Stop();
+      camera.GetComponent<CameraController>().player = obj;
+      this.transform.parent = hijacked.transform;
+    }
 	}
 	// Update is called once per frame
 	void Update () {
@@ -14,8 +29,17 @@ public class Player : MonoBehaviour {
 
     Rigidbody rigidbody = GetComponent<Rigidbody>();
 
-    Debug.Log(x);
     // xとzに10をかけて押す力をアップ
-    rigidbody.AddForce(x * 10, 0, z * 10);
+    if(hijacked!=null){
+      hijacked.GetComponent<Rigidbody>().AddForce(x * 10, 0, z * 10, ForceMode.Acceleration);
+      transform.position = hijacked.transform.position;
+    }
+    else{
+      rigidbody.AddForce(x * 10, 0, z * 10, ForceMode.Acceleration);
+    }
+
+    if(Input.GetKeyDown(KeyCode.Space)){
+      ps.Play();
+    }
 	}
 }
