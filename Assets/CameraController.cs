@@ -22,4 +22,8 @@ public class CameraController : MonoBehaviour {
         //カメラの transform 位置をプレイヤーのものと等しく設定します。ただし、計算されたオフセット距離によるずれも加えます。
         transform.position = player.transform.position + offset;
     }
+    public void CoordinateRot(){
+      transform.rotation = player.transform.rotation;
+      offset = new Vector3(0, 5, -10);
+    }
 }

@@ -18,28 +18,46 @@ public class Player : MonoBehaviour {
       hijacked = obj;
 		  Debug.Log("衝突");
       ps.Stop();
-      camera.GetComponent<CameraController>().player = obj;
+      camera.transform.parent = obj.transform;
+      camera.transform.rotation = obj.transform.rotation;
       this.transform.parent = hijacked.transform;
+      camera.transform.position = obj.transform.position;
+      camera.transform.Translate(new Vector3(0, 4, -10));
     }
 	}
+  bool isHijacked(){
+    return (hijacked!=null);
+  }
+  void Jump(){
+    hijacked.GetComponent<Mob>().Jump();
+  }
+
+  void Move(float x,float z){
+    if(isHijacked()){
+      hijacked.GetComponent<Mob>().Move(x, z);
+      transform.position = hijacked.transform.position;
+    }
+    else {
+      transform.Translate(x * 0.1f, 0, z * 0.1f);
+    }
+  }
+
+  void HyouiStart(){
+      ps.Play();
+  }
+
 	// Update is called once per frame
 	void Update () {
     float x = Input.GetAxis("Horizontal");
     float z = Input.GetAxis("Vertical");
+    Move(x, z);
 
-    Rigidbody rigidbody = GetComponent<Rigidbody>();
-
-    // xとzに10をかけて押す力をアップ
-    if(hijacked!=null){
-      hijacked.GetComponent<Rigidbody>().AddForce(x * 10, 0, z * 10, ForceMode.Acceleration);
-      transform.position = hijacked.transform.position;
-    }
-    else{
-      rigidbody.AddForce(x * 10, 0, z * 10, ForceMode.Acceleration);
+    if(Input.GetButtonDown("Jump")){
+      Jump();
     }
 
-    if(Input.GetKeyDown(KeyCode.Space)){
-      ps.Play();
+    if(Input.GetKeyDown(KeyCode.Z)){
+      HyouiStart();
     }
 	}
 }
