@@ -23,6 +23,8 @@ public class Player : MonoBehaviour {
       this.transform.parent = hijacked.transform;
       camera.transform.position = obj.transform.position;
       camera.transform.Translate(new Vector3(0, 4, -10));
+      this.dependentMode();
+      ps.Stop();
     }
 	}
   bool isHijacked(){
@@ -38,23 +40,41 @@ public class Player : MonoBehaviour {
       transform.position = hijacked.transform.position;
     }
     else {
-      transform.Translate(x * 0.1f, 0, z * 0.1f);
+      transform.Translate(0, 0, z * 0.1f);
+      transform.Rotate(0, x, 0);
     }
   }
 
   void HyouiStart(){
-      ps.Play();
+    ps.Play();
+  }
+
+  public void independentMode(){
+    this.transform.localScale = new Vector3 (1f, 1f, 1f);
+  }
+
+  public void dependentMode(){
+    this.transform.localScale = new Vector3 (0.1f, 0.1f, 0.1f);
   }
 
 	// Update is called once per frame
 	void Update () {
-    float x = Input.GetAxis("Horizontal");
-    float z = Input.GetAxis("Vertical");
+    float x=0;
+    float z=0;
+    if((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))){
+      float y = Input.GetAxis("Vertical");
+      camera.transform.Rotate(-y, 0, 0);
+    }
+    else{
+      z = Input.GetAxis("Vertical");
+    }
+    x = Input.GetAxis("Horizontal");
     Move(x, z);
 
     if(Input.GetButtonDown("Jump")){
       Jump();
     }
+
 
     if(Input.GetKeyDown(KeyCode.Z)){
       HyouiStart();
