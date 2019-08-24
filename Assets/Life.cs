@@ -5,6 +5,7 @@ using UnityEngine;
 public class Life : MonoBehaviour
 {
     public int hp;
+    public int classInHierarchy;
     void Jump(){
     }
     protected void Parthenogenesis() { // 単為生殖
@@ -14,5 +15,9 @@ public class Life : MonoBehaviour
       child.transform.Translate(0,0,-3);
       Destroy(child.transform.Find("Camera").gameObject);
       Destroy(child.transform.Find("Player").gameObject);
+    }
+    public bool canEat(Life l){
+      int diff = this.classInHierarchy - l.classInHierarchy;
+      return (diff <= 2 && 0 < diff);
     }
 }

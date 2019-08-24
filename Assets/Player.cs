@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityStandardAssets.Cameras;
 
 public class Player : MonoBehaviour {
@@ -8,10 +9,14 @@ public class Player : MonoBehaviour {
   GameObject hijacked;
   ParticleSystem ps;
   GameObject camera;
+  int hp;
+  public GameObject hijackedMobHPTextObj;
+  Text hijackedMobHPText;
 
 	void Start () {
     ps = GetComponent<ParticleSystem>();
     camera = GameObject.Find("Camera");
+    hijackedMobHPText = hijackedMobHPTextObj.GetComponent<Text>();
 	}
 	void OnParticleCollision(GameObject obj) {
     if(obj.tag == "Mob"){
@@ -31,7 +36,11 @@ public class Player : MonoBehaviour {
     return (hijacked!=null);
   }
   void Jump(){
-    hijacked.GetComponent<Mob>().Jump();
+    if(isHijacked()){
+      hijacked.GetComponent<Mob>().Jump();
+    } else {
+      GetComponent<Rigidbody>().AddForce(0, 500, 0);
+    }
   }
 
   void Move(float x,float z){
@@ -73,6 +82,13 @@ public class Player : MonoBehaviour {
 
     if(Input.GetButtonDown("Jump")){
       Jump();
+    }
+
+    if(isHijacked()){
+      hijackedMobHPText.text = "憑依モブのHP:" + hijacked.GetComponent<Mob>().hp.ToString();
+    }
+    else {
+      hijackedMobHPText.text = "憑依モブのHP:" + "なし";
     }
 
 

@@ -10,7 +10,7 @@ public class Mob : Life {
   private float timeElapsed;
   Animator anim;
   //int hp = 3000;
-  Vector3 defaultCameraPosition=new Vector3 (0, 4, -10);
+  Vector3 defaultCameraPosition=(new Vector3 (0, 4, -10));
 
 	// Use this for initialization
 	void Start () {
@@ -58,32 +58,68 @@ public class Mob : Life {
       }
     }
 
-    RaycastHit[] hits_forward = shotRay(Vector3.forward, Vector3.up*0.7f, Color.blue, 4);
-    if (hits_forward.Length != 0){
-      this.Move(10, 0);
-    } else {
-      RaycastHit[] hits_jimen = shotRay(new Vector3(0,-1,2), Vector3.up*2, Color.red, 10);
-      bool exist_terrain = false;
-      foreach (RaycastHit hit in hits_jimen) {
-        if(hit.collider.gameObject.name=="Terrain"){
-          exist_terrain = exist_terrain || true;
-        }
+    RaycastHit hits_forward = shotRay(Vector3.forward, Vector3.up*0.7f, Color.blue, 4);
+    if (hits_forward.collider != null &&
+        (hits_forward.collider.gameObject.tag == "Mob" || hits_forward.collider.gameObject.tag == "Plant")){
+      if (this.canEat(hits_forward.collider.gameObject.GetComponent<Life>())){
+        this.Move(0, 4);
+      } else if (hits_forward.collider.gameObject.GetComponent<Life>().canEat(this)){
+        this.Move(10, 0);
       }
-
-      if(exist_terrain){
+      else {
+        this.Move(1, 0);
+      }
+    } else if (hits_forward.collider != null && hits_forward.collider.gameObject.name == "Terrain"){
+      this.Move(1, 0);
+    } else {
+      RaycastHit[] hits_jimen = shotRayAll(new Vector3(0,-1,2), Vector3.up*2, Color.red, 10);
+      bool jimen_flag = false;
+      foreach(RaycastHit hit in hits_jimen){
+        if(hit.collider.gameObject.name=="Terrain"){
+          jimen_flag = true; continue;
+        };
+      }
+      if(jimen_flag){
         this.Move(0, 1);
       } else {
-        this.Move(10, 0);
+        this.Move(1, 0);
       }
     }
   }
 
-  RaycastHit[] shotRay(Vector3 dir, Vector3 pos, Color color, int distance){
+  RaycastHit shotRay(Vector3 dir, Vector3 pos, Color color, int distance){
+    Vector3 position = gameObject.transform.position + pos;
+    Ray ray = new Ray (position, transform.TransformDirection(dir));
+    Debug.DrawLine (ray.origin, ray.direction*100, color);
+    RaycastHit hits_all;
+    Physics.Raycast(ray, out hits_all, distance);
+    return hits_all;
+  }
+  RaycastHit[] shotRayAll(Vector3 dir, Vector3 pos, Color color, int distance){
     Vector3 position = gameObject.transform.position + pos;
     Ray ray = new Ray (position, transform.TransformDirection(dir));
     Debug.DrawLine (ray.origin, ray.direction*100, color);
     RaycastHit[] hits_all = Physics.RaycastAll(ray, distance);
     return hits_all;
+  }
+
+  // 捕食
+  void OnCollisionEnter (Collision collision){
+    GameObject colliObj = collision.gameObject;
+    if(colliObj.tag == "Mob"){
+      if(this.canEat(colliObj.GetComponent<Life>())){
+        Mob foodMob = colliObj.GetComponent<Mob>();
+        this.hp += foodMob.hp;
+        foodMob.hp = 0;
+      }
+    }
+    else if(colliObj.tag == "Plant"){
+      if(this.canEat(colliObj.GetComponent<Life>())){
+        PlantController foodPlant = colliObj.GetComponent<PlantController>();
+        this.hp += foodPlant.hp;
+        foodPlant.hp = 0;
+      }
+    }
   }
 
 	void Update () {
