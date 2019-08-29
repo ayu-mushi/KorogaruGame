@@ -3,21 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.Cameras;
+using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour {
+public class Player : Life {
 
   GameObject hijacked;
   ParticleSystem ps;
   GameObject camera;
-  int hp;
+  int level=1;
+  int playerExp;
   public GameObject hijackedMobHPTextObj;
   Text hijackedMobHPText;
+  public Text playerExpTextObj;
+  Text playerExpText;
+  public Text levelTextObj;
+  Text levelText;
+
 
 	void Start () {
     ps = GetComponent<ParticleSystem>();
     camera = GameObject.Find("Camera");
     hijackedMobHPText = hijackedMobHPTextObj.GetComponent<Text>();
+    playerExpText = playerExpTextObj.GetComponent<Text>();
+    levelText = levelTextObj.GetComponent<Text>();
+    refreshLevel();
+    refreshPlayerExp();
 	}
+  public void refreshLevel(){
+    levelText.text = "レベル:" + level.ToString();
+  }
+  public void refreshPlayerExp(){
+    playerExpText.text = "経験値:" + playerExp.ToString();
+  }
 	void OnParticleCollision(GameObject obj) {
     if(obj.tag == "Mob"){
       hijacked = obj;
@@ -63,9 +80,23 @@ public class Player : MonoBehaviour {
   }
 
   public void dependentMode(){
-    this.transform.localScale = new Vector3 (0.1f, 0.1f, 0.1f);
+    this.transform.localScale = new Vector3 (0.0f, 0.0f, 0.0f);
   }
 
+  public void eatMob(string eatenMob, int exp){
+    Debug.Log(eatenMob);
+    playerExp += exp;
+    Debug.Log(playerExp);
+  }
+
+  void LevelUpIfPossible(){
+    if(playerExp >= 20){
+      level +=1;
+      playerExp -= 20;
+      refreshLevel();
+      refreshPlayerExp();
+    }
+  }
 	// Update is called once per frame
 	void Update () {
     float x=0;
@@ -90,10 +121,21 @@ public class Player : MonoBehaviour {
     else {
       hijackedMobHPText.text = "憑依モブのHP:" + "なし";
     }
+    LevelUpIfPossible();
 
 
     if(Input.GetKeyDown(KeyCode.Z)){
       HyouiStart();
+    }
+    if(Input.GetKeyDown(KeyCode.C)){
+      hijacked.GetComponent<Life>().hp=0;
+    }
+    if(transform.position.y < -40){
+      hp=0;
+    }
+    if(hp <= 0){
+      Destroy(gameObject);
+      SceneManager.LoadScene("GameOver");
     }
 	}
 }

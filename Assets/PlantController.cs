@@ -12,6 +12,9 @@ public class PlantController : Life
     // Update is called once per frame
     void Update()
     {
+      if(transform.position.y < -40){
+        hp=0;
+      }
       if(hp <= 0){
         Destroy(gameObject);
       }

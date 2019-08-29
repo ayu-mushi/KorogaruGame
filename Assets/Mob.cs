@@ -17,7 +17,7 @@ public class Mob : Life {
     timeout = 30+UnityEngine.Random.Range(0, 10);
     gameObject.tag = "Mob";
     anim = gameObject.GetComponent<Animator>();
-    hp = 5000;
+    hp = 1000;
   }
   /*
   void Parthenogenesis() { // 単為生殖
@@ -110,6 +110,11 @@ public class Mob : Life {
       if(this.canEat(colliObj.GetComponent<Life>())){
         Mob foodMob = colliObj.GetComponent<Mob>();
         this.hp += foodMob.hp;
+        if(gameObject.transform.Find("Player") != null){
+          Player player = gameObject.transform.Find("Player").GetComponent<Player>();
+          player.eatMob(foodMob.name, foodMob.exp);
+          player.refreshPlayerExp();
+        }
         foodMob.hp = 0;
       }
     }
@@ -118,6 +123,11 @@ public class Mob : Life {
         PlantController foodPlant = colliObj.GetComponent<PlantController>();
         this.hp += foodPlant.hp;
         foodPlant.hp = 0;
+        if(gameObject.transform.Find("Player") != null){
+          Player player = gameObject.transform.Find("Player").GetComponent<Player>();
+          player.eatMob(foodPlant.name, foodPlant.exp);
+          player.refreshPlayerExp();
+        }
       }
     }
   }
@@ -144,6 +154,5 @@ public class Mob : Life {
       }
       Destroy(gameObject);
     }
-    GameObject camera2=GameObject.Find("Camera");
   }
 }

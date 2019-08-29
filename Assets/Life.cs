@@ -6,6 +6,7 @@ public class Life : MonoBehaviour
 {
     public int hp;
     public int classInHierarchy;
+    public int exp;
     void Jump(){
     }
     protected void Parthenogenesis() { // 単為生殖
