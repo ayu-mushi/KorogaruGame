@@ -9,7 +9,6 @@ public class Mob : Life {
   float timeout;
   private float timeElapsed;
   Animator anim;
-  //int hp = 3000;
   Vector3 defaultCameraPosition=(new Vector3 (0, 4, -10));
 
 	// Use this for initialization
@@ -17,20 +16,12 @@ public class Mob : Life {
     timeout = 30+UnityEngine.Random.Range(0, 10);
     gameObject.tag = "Mob";
     anim = gameObject.GetComponent<Animator>();
-    hp = 1000;
+    initialHp = hp;
   }
-  /*
-  void Parthenogenesis() { // 単為生殖
-    Jump();
-    GameObject child;
-    child = Instantiate(gameObject) as GameObject;
-    child.transform.Translate(0,0,-3);
-    Destroy(child.transform.Find("Camera").gameObject);
-    Destroy(child.transform.Find("Player").gameObject);
-  }*/
   public void Move(float x, float z){
     transform.Rotate(new Vector3(0,x,0));
     transform.Translate(0, 0, z*0.1f);
+    this.hp -= 1;
     if(x==0 && z==0){
       anim.SetInteger("Walk", 0);
     } else {
@@ -47,7 +38,7 @@ public class Mob : Life {
 
   void Automatic(){
     timeElapsed += Time.deltaTime;
-    if(timeElapsed > timeout){
+    if(hp > initialHp*1.5){
       try{
         this.Parthenogenesis();
       } catch(NullReferenceException e){
@@ -138,7 +129,6 @@ public class Mob : Life {
     } else {
     }
 
-    hp-=1;
     if(transform.position.y < -40){
       hp=0;
     }

@@ -36,7 +36,7 @@ public class Player : Life {
     playerExpText.text = "経験値:" + playerExp.ToString();
   }
 	void OnParticleCollision(GameObject obj) {
-    if(obj.tag == "Mob"){
+    if(obj.tag == "Mob" && level >= obj.GetComponent<Life>().classInHierarchy){
       hijacked = obj;
 		  Debug.Log("衝突");
       ps.Stop();

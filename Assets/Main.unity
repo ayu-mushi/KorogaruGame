@@ -765,6 +765,7 @@ MonoBehaviour:
   hp: 20
   classInHierarchy: 1
   exp: 0
+  initialHp: 0
   hijackedMobHPTextObj: {fileID: 2126679502}
   playerExpTextObj: {fileID: 266914228}
   levelTextObj: {fileID: 158506834}
@@ -5594,9 +5595,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d9d2c330510439d8328dbed2b15f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
+  hp: 5000
   classInHierarchy: 2
   exp: 10
+  initialHp: 0
 --- !u!1001 &1031945968
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5686,9 +5688,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d9d2c330510439d8328dbed2b15f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
+  hp: 6000
   classInHierarchy: 3
   exp: 10
+  initialHp: 0
 --- !u!1 &1104531502
 GameObject:
   m_ObjectHideFlags: 0
@@ -5798,9 +5801,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d9d2c330510439d8328dbed2b15f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
+  hp: 5000
   classInHierarchy: 2
   exp: 10
+  initialHp: 0
 --- !u!1 &1217453202
 GameObject:
   m_ObjectHideFlags: 0
@@ -5960,6 +5964,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1707330288, guid: 3ecd4a9098a60c32a89736e7515f0075, type: 3}
+      propertyPath: hp
+      value: 1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ecd4a9098a60c32a89736e7515f0075, type: 3}
 --- !u!1 &1243555216
@@ -6025,9 +6033,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d9d2c330510439d8328dbed2b15f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
+  hp: 2000
   classInHierarchy: 1
   exp: 10
+  initialHp: 0
 --- !u!1 &1431663647 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1755646104177140, guid: 2884e6b071e1c2a4faef2e7fd67b481e,
@@ -6046,9 +6055,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d9d2c330510439d8328dbed2b15f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
+  hp: 3000
   classInHierarchy: 1
   exp: 10
+  initialHp: 0
 --- !u!1 &1441296257
 GameObject:
   m_ObjectHideFlags: 0
@@ -6263,6 +6273,7 @@ MonoBehaviour:
   hp: 3000
   classInHierarchy: 4
   exp: 0
+  initialHp: 0
 --- !u!136 &1785314268
 CapsuleCollider:
   m_ObjectHideFlags: 0
