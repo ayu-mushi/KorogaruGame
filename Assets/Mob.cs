@@ -17,15 +17,17 @@ public class Mob : Life {
     gameObject.tag = "Mob";
     anim = gameObject.GetComponent<Animator>();
     initialHp = hp;
+    this.initializeHpText();
+    this.initializeMaxHp();
   }
   public void Move(float x, float z){
     transform.Rotate(new Vector3(0,x,0));
     transform.Translate(0, 0, z*0.1f);
-    this.hp -= 1;
     if(x==0 && z==0){
       anim.SetInteger("Walk", 0);
     } else {
       anim.SetInteger("Walk", 1);
+      this.hp -= 1;
     }
   }
   public void Jump(){
@@ -34,11 +36,12 @@ public class Mob : Life {
 
     GetComponent<Rigidbody>().AddForce(0,200,0);
     anim.SetTrigger("jump");
+    this.hp -= 5;
   }
 
   void Automatic(){
     timeElapsed += Time.deltaTime;
-    if(hp > initialHp*1.5){
+    if(hp > this.maxHp){
       try{
         this.Parthenogenesis();
       } catch(NullReferenceException e){
@@ -63,7 +66,7 @@ public class Mob : Life {
     } else if (hits_forward.collider != null && hits_forward.collider.gameObject.name == "Terrain"){
       this.Move(1, 0);
     } else {
-      RaycastHit[] hits_jimen = shotRayAll(new Vector3(0,-1,2), Vector3.up*2, Color.red, 10);
+      RaycastHit[] hits_jimen = shotRayAll(new Vector3(0,-1,0.6f), Vector3.up*2, Color.red, 10);
       bool jimen_flag = false;
       foreach(RaycastHit hit in hits_jimen){
         if(hit.collider.gameObject.name=="Terrain"){
@@ -144,5 +147,6 @@ public class Mob : Life {
       }
       Destroy(gameObject);
     }
+    this.updateHpText();
   }
 }

@@ -23,5 +23,6 @@ public class PlantGenerator : MonoBehaviour
         pos.y = 0;
         pos.z = Random.RandomRange(0, 60f);
         newplant.transform.position = pos;
+        newplant.transform.parent = gameObject.transform;
     }
 }

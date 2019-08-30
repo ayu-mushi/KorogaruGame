@@ -97,6 +97,8 @@ public class Player : Life {
       refreshPlayerExp();
     }
   }
+
+GameObject clickedGameObject = null;
 	// Update is called once per frame
 	void Update () {
     float x=0;
@@ -116,7 +118,17 @@ public class Player : Life {
     }
 
     if(isHijacked()){
-      hijackedMobHPText.text = "憑依モブのHP:" + hijacked.GetComponent<Mob>().hp.ToString();
+      Life hijackedLife = hijacked.GetComponent<Life>();
+      if(hijackedLife.hp >= hijackedLife.maxHp && Input.GetKey(KeyCode.X)){
+        Debug.Log("hp:" + hijackedLife.hp.ToString());
+        Debug.Log("maxHp:" + hijackedLife.maxHp.ToString());
+        hijackedLife.Parthenogenesis();
+      }
+      if(hijackedLife.hp > hijackedLife.maxHp){
+        hijackedLife.hp = hijackedLife.maxHp;
+      }
+      hijackedMobHPText.text = "憑依モブのHP:" + hijackedLife.hp.ToString()
+                                               + "/" + hijackedLife.maxHp.ToString();
     }
     else {
       hijackedMobHPText.text = "憑依モブのHP:" + "なし";
@@ -136,6 +148,15 @@ public class Player : Life {
     if(hp <= 0){
       Destroy(gameObject);
       SceneManager.LoadScene("GameOver");
+    }
+    if (Input.GetMouseButtonDown(0)) {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit = new RaycastHit();
+
+        if (Physics.Raycast(ray, out hit)) {
+          clickedGameObject = hit.collider.gameObject;
+          Debug.Log(clickedGameObject);
+        }
     }
 	}
 }
