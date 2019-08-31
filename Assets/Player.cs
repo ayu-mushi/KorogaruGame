@@ -18,6 +18,7 @@ public class Player : Life {
   Text playerExpText;
   public Text levelTextObj;
   Text levelText;
+  public GameObject hyouiLaser;
 
 
 	void Start () {
@@ -35,7 +36,7 @@ public class Player : Life {
   public void refreshPlayerExp(){
     playerExpText.text = "経験値:" + playerExp.ToString();
   }
-	void OnParticleCollision(GameObject obj) {
+	public void OnHyouiLaserCollision(GameObject obj) {
     if(obj.tag == "Mob" && level >= obj.GetComponent<Life>().classInHierarchy){
       hijacked = obj;
 		  Debug.Log("衝突");
@@ -46,7 +47,7 @@ public class Player : Life {
       camera.transform.position = obj.transform.position;
       camera.transform.Translate(new Vector3(0, 4, -10));
       this.dependentMode();
-      ps.Stop();
+      //ps.Stop();
     }
 	}
   bool isHijacked(){
@@ -72,7 +73,11 @@ public class Player : Life {
   }
 
   void HyouiStart(){
-    ps.Play();
+    //ps.Play();
+    GameObject hyoui = Instantiate(hyouiLaser) as GameObject;
+    hyoui.transform.parent = gameObject.transform;
+    hyoui.transform.localPosition = hyoui.transform.position;
+    hyoui.transform.localEulerAngles = hyoui.transform.eulerAngles;
   }
 
   public void independentMode(){
@@ -141,6 +146,12 @@ GameObject clickedGameObject = null;
     }
     if(Input.GetKeyDown(KeyCode.C)){
       hijacked.GetComponent<Life>().hp=0;
+    }
+    if(Input.GetKeyDown(KeyCode.M)){
+      maxHp=1000000;
+      hp=100000;
+      level=6;
+      refreshLevel();
     }
     if(transform.position.y < -40){
       hp=0;

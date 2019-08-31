@@ -105,13 +105,15 @@ public class Mob : Life {
     if(colliObj.tag == "Mob"){
       if(this.canEat(colliObj.GetComponent<Life>())){
         Mob foodMob = colliObj.GetComponent<Mob>();
-        this.hp += foodMob.hp;
         if(gameObject.transform.Find("Player") != null){
           Player player = gameObject.transform.Find("Player").GetComponent<Player>();
           player.eatMob(foodMob.name, foodMob.exp);
           player.refreshPlayerExp();
         }
-        foodMob.hp = 0;
+        int beforeHP = foodMob.hp;
+        int afterHp = foodMob.hp - 5000;
+        foodMob.hp = afterHp;
+        if(afterHp <= 0) { this.hp += beforeHP; }
       }
     }
     else if(colliObj.tag == "Plant"){

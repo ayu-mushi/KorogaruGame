@@ -14,13 +14,16 @@ public class PlantGenerator : MonoBehaviour
     public GameObject chicken;
     public GameObject hunter;
 
+    Transform sizeViewer;
 
 
     void Start()
     {
+      sizeViewer = transform.Find("SizeViewer");
       GenerateN(2, plant);
       GenerateN(2, penguin);
       GenerateN(2, chicken);
+      GenerateN(1,cat);
     }
     float genCount;
     float r = 0.3f;
@@ -34,10 +37,15 @@ public class PlantGenerator : MonoBehaviour
       else {
         maxCount = 5/(transform.childCount * (1 - transform.childCount/500));
       }*/
-      int N = transform.childCount;
-      maxCount = 1/(countMobs("Plant")*0.1f); ///(N*(r*N*(1-(N/K))));
+      int N = countMobs("Plant");
       if(N > 200){
         maxCount = 1;
+      }
+      if(N==0){
+        maxCount = 0.1f;
+      }
+      else {
+        maxCount = 1/(N*0.1f); ///(N*(r*N*(1-(N/K))));
       }
       if(genCount > maxCount){
         Generate(plant);
@@ -74,10 +82,13 @@ public class PlantGenerator : MonoBehaviour
     {
         GameObject newplant = Instantiate(nanika);
         Vector3 pos = newplant.transform.position;
-        pos.x = Random.RandomRange(transform.position.x, transform.position.x + transform.localScale.x);
+        if(sizeViewer==null){Debug.Log("sizeViewerがnull");}
+        else{
+        pos.x = Random.RandomRange(transform.position.x, transform.position.x + sizeViewer.lossyScale.x);
         pos.y = 2;
-        pos.z = Random.RandomRange(transform.position.z, transform.position.z + transform.localScale.z);
+        pos.z = Random.RandomRange(transform.position.z, transform.position.z + sizeViewer.lossyScale.z);
         newplant.transform.position = pos;
+        }
     }
 
     int countMobs(string name){
