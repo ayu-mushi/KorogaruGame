@@ -119,13 +119,13 @@ GameObject clickedGameObject = null;
 
     if(isHijacked()){
       Life hijackedLife = hijacked.GetComponent<Life>();
+      if(hijackedLife.hp > hijackedLife.maxHp){
+        hijackedLife.hp = hijackedLife.maxHp;
+      }
       if(hijackedLife.hp >= hijackedLife.maxHp && Input.GetKey(KeyCode.X)){
         Debug.Log("hp:" + hijackedLife.hp.ToString());
         Debug.Log("maxHp:" + hijackedLife.maxHp.ToString());
         hijackedLife.Parthenogenesis();
-      }
-      if(hijackedLife.hp > hijackedLife.maxHp){
-        hijackedLife.hp = hijackedLife.maxHp;
       }
       hijackedMobHPText.text = "憑依モブのHP:" + hijackedLife.hp.ToString()
                                                + "/" + hijackedLife.maxHp.ToString();
