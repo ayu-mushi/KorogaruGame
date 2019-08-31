@@ -10,23 +10,10 @@ public class Life : MonoBehaviour
     public int exp;
     public int initialHp;
     public int maxHp;
-    Text hpText;
     void Jump(){
-    }
-    public void initializeHpText(){
-      GameObject hpTextObj = transform.Find("HPCanvasPrefab/HP").gameObject;
-      if(hpTextObj !=null){
-      hpText = hpTextObj.GetComponent<Text>();
-      }
     }
     public void initializeMaxHp(){
       maxHp = (int)(initialHp * 1.5);
-    }
-    public void updateHpText(){
-      if(hpText !=null) {
-        hpText.text = hp.ToString() + "/" + maxHp.ToString();
-      }
-      //transform.Find("HPCanvasPrefab").LookAt(GameObject.Find("Player").transform);
     }
     public void Parthenogenesis() { // 単為生殖
       Jump();

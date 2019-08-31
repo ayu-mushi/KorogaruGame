@@ -93,6 +93,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 3000
+  classInHierarchy: 0
+  exp: 0
+  initialHp: 0
+  maxHp: 0
 --- !u!65 &6789021181282249241
 BoxCollider:
   m_ObjectHideFlags: 0

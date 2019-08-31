@@ -42,7 +42,7 @@ PrefabInstance:
     - target: {fileID: 4378564486106672748, guid: 9d8d15da66fe0dfbeb95355eaa242aa3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 38.67
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4378564486106672748, guid: 9d8d15da66fe0dfbeb95355eaa242aa3,
         type: 3}
@@ -87,12 +87,12 @@ PrefabInstance:
     - target: {fileID: 4378564486106672748, guid: 9d8d15da66fe0dfbeb95355eaa242aa3,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 11.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4378564486106672748, guid: 9d8d15da66fe0dfbeb95355eaa242aa3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.03
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4378564486106672748, guid: 9d8d15da66fe0dfbeb95355eaa242aa3,
         type: 3}
@@ -145,7 +145,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1755646104177140, guid: 2884e6b071e1c2a4faef2e7fd67b481e, type: 3}
       propertyPath: m_Name
-      value: Penguin
+      value: Penguin Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1755646104177140, guid: 2884e6b071e1c2a4faef2e7fd67b481e, type: 3}
       propertyPath: m_TagString

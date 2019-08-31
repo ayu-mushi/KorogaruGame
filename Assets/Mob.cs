@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ public class Mob : Life {
   private float timeElapsed;
   Animator anim;
   Vector3 defaultCameraPosition=(new Vector3 (0, 4, -10));
+  Slider hpSlider;
 
 	// Use this for initialization
 	void Start () {
@@ -17,8 +19,8 @@ public class Mob : Life {
     gameObject.tag = "Mob";
     anim = gameObject.GetComponent<Animator>();
     initialHp = hp;
-    this.initializeHpText();
     this.initializeMaxHp();
+    hpSlider = transform.Find("HPCanvasPrefab/HPSlider").gameObject.GetComponent<Slider>();
   }
   public void Move(float x, float z){
     transform.Rotate(new Vector3(0,x*Time.deltaTime*60,0));
@@ -135,6 +137,8 @@ public class Mob : Life {
     if(transform.position.y < -40){
       hp=0;
     }
+    hpSlider.maxValue = maxHp;
+    hpSlider.value = hp;
     if(hp <= 0){
       if(gameObject.transform.Find("Player") != null){
         Transform player = gameObject.transform.Find("Player");
@@ -147,6 +151,5 @@ public class Mob : Life {
       }
       Destroy(gameObject);
     }
-    this.updateHpText();
   }
 }

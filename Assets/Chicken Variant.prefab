@@ -42,7 +42,7 @@ PrefabInstance:
     - target: {fileID: 4378564486106672748, guid: 9d8d15da66fe0dfbeb95355eaa242aa3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 38.67
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4378564486106672748, guid: 9d8d15da66fe0dfbeb95355eaa242aa3,
         type: 3}
@@ -87,12 +87,12 @@ PrefabInstance:
     - target: {fileID: 4378564486106672748, guid: 9d8d15da66fe0dfbeb95355eaa242aa3,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 11.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4378564486106672748, guid: 9d8d15da66fe0dfbeb95355eaa242aa3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.03
+      value: 2.4
       objectReference: {fileID: 0}
     - target: {fileID: 4378564486106672748, guid: 9d8d15da66fe0dfbeb95355eaa242aa3,
         type: 3}
@@ -145,7 +145,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1969419073538870, guid: aa3784adb6428184e991be2d60ee0cb2, type: 3}
       propertyPath: m_Name
-      value: Chicken
+      value: Chicken Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1969419073538870, guid: aa3784adb6428184e991be2d60ee0cb2, type: 3}
       propertyPath: m_TagString
