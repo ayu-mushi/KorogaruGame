@@ -8,25 +8,24 @@ using UnityEngine.SceneManagement;
 public class Player : Life {
 
   GameObject hijacked;
-  ParticleSystem ps;
   GameObject camera;
   int level=1;
   int playerExp;
-  public GameObject hijackedMobHPTextObj;
-  Text hijackedMobHPText;
+  Text playerHpText;
   public Text playerExpTextObj;
   Text playerExpText;
   public Text levelTextObj;
   Text levelText;
   public GameObject hyouiLaser;
+  Text descriptionText;
 
 
 	void Start () {
-    ps = GetComponent<ParticleSystem>();
     camera = GameObject.Find("Camera");
-    hijackedMobHPText = hijackedMobHPTextObj.GetComponent<Text>();
     playerExpText = playerExpTextObj.GetComponent<Text>();
     levelText = levelTextObj.GetComponent<Text>();
+    descriptionText = GameObject.Find("Description").GetComponent<Text>();
+    playerHpText = GameObject.Find("PlayerHP").GetComponent<Text>();
     refreshLevel();
     refreshPlayerExp();
 	}
@@ -40,14 +39,13 @@ public class Player : Life {
     if(obj.tag == "Mob" && level >= obj.GetComponent<Life>().classInHierarchy){
       hijacked = obj;
 		  Debug.Log("衝突");
-      ps.Stop();
       camera.transform.parent = obj.transform;
       camera.transform.rotation = obj.transform.rotation;
       this.transform.parent = hijacked.transform;
+      hijacked.transform.parent =null;
       camera.transform.position = obj.transform.position;
       camera.transform.Translate(new Vector3(0, 4, -10));
       this.dependentMode();
-      //ps.Stop();
     }
 	}
   bool isHijacked(){
@@ -73,7 +71,6 @@ public class Player : Life {
   }
 
   void HyouiStart(){
-    //ps.Play();
     GameObject hyoui = Instantiate(hyouiLaser) as GameObject;
     hyoui.transform.parent = gameObject.transform;
     hyoui.transform.localPosition = hyoui.transform.position;
@@ -103,7 +100,23 @@ public class Player : Life {
     }
   }
 
-GameObject clickedGameObject = null;
+	[SerializeField]
+	public GameObject pauseUI;
+	void EnablePause(){
+		if (Input.GetKeyDown ("q")) {
+			//　ポーズUIのアクティブ、非アクティブを切り替え
+			pauseUI.SetActive (!pauseUI.activeSelf);
+
+			//　ポーズUIが表示されてる時は停止
+			if(pauseUI.activeSelf) {
+				Time.timeScale = 0f;
+			//　ポーズUIが表示されてなければ通常通り進行
+			} else {
+				Time.timeScale = 1f;
+			}
+		}
+  }
+
 	// Update is called once per frame
 	void Update () {
     float x=0;
@@ -132,14 +145,14 @@ GameObject clickedGameObject = null;
         Debug.Log("maxHp:" + hijackedLife.maxHp.ToString());
         hijackedLife.Parthenogenesis();
       }
-      hijackedMobHPText.text = "憑依モブのHP:" + hijackedLife.hp.ToString()
-                                               + "/" + hijackedLife.maxHp.ToString();
+      //hijackedMobHPText.text = "憑依モブのHP:" + hijackedLife.hp.ToString()
+       //                                        + "/" + hijackedLife.maxHp.ToString();
     }
     else {
-      hijackedMobHPText.text = "憑依モブのHP:" + "なし";
+      //hijackedMobHPText.text = "憑依モブのHP:" + "なし";
     }
+    playerHpText.text = "プレイヤーHP:" + hp;
     LevelUpIfPossible();
-
 
     if(Input.GetKeyDown(KeyCode.Z)){
       HyouiStart();
@@ -165,9 +178,10 @@ GameObject clickedGameObject = null;
         RaycastHit hit = new RaycastHit();
 
         if (Physics.Raycast(ray, out hit)) {
-          clickedGameObject = hit.collider.gameObject;
-          Debug.Log(clickedGameObject);
+          GameObject clickedGameObject = hit.collider.gameObject;
+          descriptionText.text = clickedGameObject.ToString();
         }
     }
+    EnablePause();
 	}
 }

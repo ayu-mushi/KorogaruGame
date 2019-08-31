@@ -1,0 +1,204 @@
+fileFormatVersion: 2
+guid: 4bc3122322e23495f92fae6f3556179a
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: door
+    100004: fundaments
+    100006: windows
+    100008: woods
+    100010: plot
+    100012: plot_2
+    100014: plot_prosty
+    100016: ogrodzenie
+    100018: lawka_1
+    100020: Cube
+    100022: Cube_1
+    100024: Cylinder
+    100026: Cylinder_2
+    100028: Tube
+    100030: bench
+    100032: bulb
+    100034: chimeny
+    100036: fence
+    100038: house
+    100040: mailbox
+    100042: mailbox_obj
+    100044: street_lamp
+    400000: //RootNode
+    400002: door
+    400004: fundaments
+    400006: windows
+    400008: woods
+    400010: plot
+    400012: plot_2
+    400014: plot_prosty
+    400016: ogrodzenie
+    400018: lawka_1
+    400020: Cube
+    400022: Cube_1
+    400024: Cylinder
+    400026: Cylinder_2
+    400028: Tube
+    400030: bench
+    400032: bulb
+    400034: chimeny
+    400036: fence
+    400038: house
+    400040: mailbox
+    400042: mailbox_obj
+    400044: street_lamp
+    2100000: Mat.1
+    2100002: Mat
+    2100004: Mat.2
+    2100006: No Name
+    2100008: Mat.4
+    2100010: Mat.3
+    2300000: door
+    2300002: fundaments
+    2300004: windows
+    2300006: woods
+    2300008: plot
+    2300010: plot_2
+    2300012: plot_prosty
+    2300014: ogrodzenie
+    2300016: lawka_1
+    2300018: Cube
+    2300020: Cube_1
+    2300022: Cylinder
+    2300024: Cylinder_2
+    2300026: Tube
+    2300028: bench
+    2300030: bulb
+    2300032: chimeny
+    2300034: fence
+    2300036: house
+    2300038: mailbox
+    2300040: mailbox_obj
+    2300042: street_lamp
+    3300000: door
+    3300002: fundaments
+    3300004: windows
+    3300006: woods
+    3300008: plot
+    3300010: plot_2
+    3300012: plot_prosty
+    3300014: ogrodzenie
+    3300016: lawka_1
+    3300018: Cube
+    3300020: Cube_1
+    3300022: Cylinder
+    3300024: Cylinder_2
+    3300026: Tube
+    3300028: bench
+    3300030: bulb
+    3300032: chimeny
+    3300034: fence
+    3300036: house
+    3300038: mailbox
+    3300040: mailbox_obj
+    3300042: street_lamp
+    4300000: woods
+    4300002: door
+    4300004: fundaments
+    4300006: windows
+    4300008: plot
+    4300010: plot_prosty
+    4300012: plot_2
+    4300014: ogrodzenie
+    4300016: lawka_1
+    4300018: Cylinder
+    4300020: Cylinder_2
+    4300022: Cube_1
+    4300024: Tube
+    4300026: Cube
+    4300028: house
+    4300030: chimeny
+    4300032: street_lamp
+    4300034: bulb
+    4300036: mailbox
+    4300038: mailbox_obj
+    4300040: fence
+    4300042: bench
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.45
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

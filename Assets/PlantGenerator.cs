@@ -7,12 +7,19 @@ public class PlantGenerator : MonoBehaviour
     // Plant以外も
     // Start is called before the first frame update
     public GameObject plant;
+    public int plantNumber;
     public GameObject penguin;
+    public int penguinNumber;
     public GameObject lion;
+    public int lionNumber;
     public GameObject cat;
+    public int catNumber;
     public GameObject dog;
+    public int dogNumber;
     public GameObject chicken;
+    public int chickenNumber;
     public GameObject hunter;
+    public int hunterNumber;
 
     Transform sizeViewer;
 
@@ -20,10 +27,20 @@ public class PlantGenerator : MonoBehaviour
     void Start()
     {
       sizeViewer = transform.Find("SizeViewer");
-      GenerateN(2, plant);
-      GenerateN(2, penguin);
-      GenerateN(2, chicken);
-      GenerateN(1,cat);
+      GenerateN(plantNumber, plant);
+      GenerateN(penguinNumber, penguin);
+      GenerateN(chickenNumber, chicken);
+      GenerateN(dogNumber,dog);
+      GenerateN(catNumber,cat);
+      GenerateN(lionNumber,lion);
+      GenerateN(hunterNumber,hunter);
+    }
+    void GetPlayerHyoui(){
+      GameObject dog2 = GameObject.Find("Dog Variant(Clone)");
+      GameObject player = GameObject.Find("Player");
+      Player playerp = player.GetComponent<Player>();
+      playerp.classInHierarchy = 6;
+      playerp.OnHyouiLaserCollision(dog2);
     }
     float genCount;
     float r = 0.3f;
@@ -88,15 +105,19 @@ public class PlantGenerator : MonoBehaviour
         pos.y = 2;
         pos.z = Random.RandomRange(transform.position.z, transform.position.z + sizeViewer.lossyScale.z);
         newplant.transform.position = pos;
+        //newplant.transform.parent = transform;
+        //hyoui.transform.localPosition = hyoui.transform.position;
+        //hyoui.transform.localEulerAngles = hyoui.transform.eulerAngles;
         }
     }
 
     int countMobs(string name){
       int animalNumber=0;
       // typeで指定した型の全てのオブジェクトを配列で取得し,その要素数分繰り返す.
-      GameObject[] mobs = GameObject.FindGameObjectsWithTag("Mob");
-      foreach (GameObject obj in mobs)
+      //foreach (Transform child in transform)
+      foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Mob"))
       {
+        //GameObject obj = transform.gameObject;
         if (obj.activeInHierarchy){
           if(obj.name.Contains(name)){
             animalNumber+=1;

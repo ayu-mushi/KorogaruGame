@@ -56,7 +56,7 @@ public class Mob : Life {
 
     RaycastHit hits_forward = shotRay(Vector3.forward, Vector3.up*0.7f, Color.blue, 4);
     if (hits_forward.collider != null &&
-        (hits_forward.collider.gameObject.tag == "Mob" || hits_forward.collider.gameObject.tag == "Plant")){
+        (hits_forward.collider.gameObject.tag == "Mob" || hits_forward.collider.gameObject.tag == "Plant" || hits_forward.collider.tag == "Player")){
       if (this.canEat(hits_forward.collider.gameObject.GetComponent<Life>())){
         this.Move(0, 4);
       } else if (hits_forward.collider.gameObject.GetComponent<Life>().canEat(this)){
@@ -65,13 +65,13 @@ public class Mob : Life {
       else {
         this.Move(1, 0);
       }
-    } else if (hits_forward.collider != null && hits_forward.collider.gameObject.name == "Terrain"){
+    } else if (hits_forward.collider != null && hits_forward.collider.gameObject.tag == "Terrain"){
       this.Move(1, 0);
     } else {
       RaycastHit[] hits_jimen = shotRayAll(new Vector3(0,-1,0.6f), Vector3.up*2, Color.red, 10);
       bool jimen_flag = false;
       foreach(RaycastHit hit in hits_jimen){
-        if(hit.collider.gameObject.name=="Terrain"){
+        if(hit.collider.gameObject.tag=="Terrain"){
           jimen_flag = true; continue;
         };
       }
@@ -100,18 +100,21 @@ public class Mob : Life {
   }
 
   // 捕食
+  public void OnEatOther(GameObject other){
+    Debug.Log("捕食！");
+  }
   void OnCollisionEnter (Collision collision){
     GameObject colliObj = collision.gameObject;
-    if(colliObj.tag == "Mob"){
+    if(colliObj.tag == "Mob" || colliObj.tag == "Player"){
       if(this.canEat(colliObj.GetComponent<Life>())){
-        Mob foodMob = colliObj.GetComponent<Mob>();
+        Life foodMob = colliObj.GetComponent<Life>();
         if(gameObject.transform.Find("Player") != null){
           Player player = gameObject.transform.Find("Player").GetComponent<Player>();
           player.eatMob(foodMob.name, foodMob.exp);
           player.refreshPlayerExp();
         }
         int beforeHP = foodMob.hp;
-        int afterHp = foodMob.hp - 5000;
+        int afterHp = foodMob.hp - 1000;
         foodMob.hp = afterHp;
         if(afterHp <= 0) { this.hp += beforeHP; }
       }

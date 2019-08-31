@@ -55,8 +55,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\CallAttack.cs" />
      <Compile Include="Assets\CameraController.cs" />
      <Compile Include="Assets\GameOverController.cs" />
+     <Compile Include="Assets\HyouiLaserController.cs" />
      <Compile Include="Assets\Life.cs" />
      <Compile Include="Assets\Mob.cs" />
      <Compile Include="Assets\PlantController.cs" />
