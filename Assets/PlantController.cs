@@ -19,4 +19,9 @@ public class PlantController : Life
         Destroy(gameObject);
       }
     }
+    void OnCollisionEnter(Collision other){
+      if(other.gameObject.name.Contains("Plant")){
+        hp=0;
+      }
+    }
 }

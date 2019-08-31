@@ -35,10 +35,22 @@ public class PlantGenerator : MonoBehaviour
         maxCount = 5/(transform.childCount * (1 - transform.childCount/500));
       }*/
       int N = transform.childCount;
-      maxCount = 1/(N*0.1f); ///(N*(r*N*(1-(N/K))));
+      maxCount = 1/(countMobs("Plant")*0.1f); ///(N*(r*N*(1-(N/K))));
+      if(N > 200){
+        maxCount = 1;
+      }
       if(genCount > maxCount){
         Generate(plant);
         genCount = 0;
+      }
+      if((countMobs("Penguin") > 20 || countMobs("Chicken") > 20)&& countMobs("Cat") == 0){
+        GenerateN(1,cat);
+      }
+      if(countMobs("Cat") > 20 && countMobs("Lion") == 0){
+        GenerateN(1,lion);
+      }
+      if(countMobs("Lion") > 20 && countMobs("unity") == 0){
+        GenerateN(1,hunter);
       }
     }
 
@@ -62,10 +74,35 @@ public class PlantGenerator : MonoBehaviour
     {
         GameObject newplant = Instantiate(nanika);
         Vector3 pos = newplant.transform.position;
-        pos.x = Random.RandomRange(0, 50f);
-        pos.y = 0;
-        pos.z = Random.RandomRange(0, 60f);
+        pos.x = Random.RandomRange(transform.position.x, transform.position.x + transform.localScale.x);
+        pos.y = 2;
+        pos.z = Random.RandomRange(transform.position.z, transform.position.z + transform.localScale.z);
         newplant.transform.position = pos;
-        newplant.transform.parent = gameObject.transform;
+    }
+
+    int countMobs(string name){
+      int animalNumber=0;
+      // typeで指定した型の全てのオブジェクトを配列で取得し,その要素数分繰り返す.
+      GameObject[] mobs = GameObject.FindGameObjectsWithTag("Mob");
+      foreach (GameObject obj in mobs)
+      {
+        if (obj.activeInHierarchy){
+          if(obj.name.Contains(name)){
+            animalNumber+=1;
+          }
+        }
+      }
+      // typeで指定した型の全てのオブジェクトを配列で取得し,その要素数分繰り返す.
+      foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Plant"))
+      {
+          // シーン上に存在するオブジェクトならば処理.
+          if (obj.activeInHierarchy)
+          {
+            if(obj.name.Contains(name)){
+              animalNumber+=1;
+            }
+          }
+      }
+      return animalNumber;
     }
 }

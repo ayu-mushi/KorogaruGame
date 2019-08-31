@@ -66,8 +66,8 @@ public class Player : Life {
       transform.position = hijacked.transform.position;
     }
     else {
-      transform.Translate(0, 0, z * 0.1f);
-      transform.Rotate(0, x, 0);
+      transform.Translate(0, 0, z*Time.deltaTime*8);
+      transform.Rotate(0, x*60f*Time.deltaTime, 0);
     }
   }
 

@@ -44,6 +44,6 @@ public class Life : MonoBehaviour
     }
     public bool canEat(Life l){
       int diff = this.classInHierarchy - l.classInHierarchy;
-      return (diff <= 2 && 0 < diff);
+      return (diff <= 1 && 0 < diff);
     }
 }

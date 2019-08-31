@@ -21,8 +21,8 @@ public class Mob : Life {
     this.initializeMaxHp();
   }
   public void Move(float x, float z){
-    transform.Rotate(new Vector3(0,x,0));
-    transform.Translate(0, 0, z*0.1f);
+    transform.Rotate(new Vector3(0,x*Time.deltaTime*60,0));
+    transform.Translate(0, 0, z*Time.deltaTime*8);
     if(x==0 && z==0){
       anim.SetInteger("Walk", 0);
     } else {
