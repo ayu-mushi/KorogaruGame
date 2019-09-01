@@ -9,7 +9,7 @@ public class Player : Life {
 
   GameObject hijacked;
   GameObject camera;
-  int level=1;
+  public int level=1;
   int playerExp;
   Text playerHpText;
   public Text playerExpTextObj;
@@ -18,9 +18,11 @@ public class Player : Life {
   Text levelText;
   public GameObject hyouiLaser;
   Text descriptionText;
+  public bool gameOverIdou;
 
 
 	void Start () {
+    base.Start();
     camera = GameObject.Find("Camera");
     playerExpText = playerExpTextObj.GetComponent<Text>();
     levelText = levelTextObj.GetComponent<Text>();
@@ -79,10 +81,12 @@ public class Player : Life {
 
   public void independentMode(){
     this.transform.localScale = new Vector3 (1f, 1f, 1f);
+    gameObject.layer = LayerMask.NameToLayer("Default");
   }
 
   public void dependentMode(){
     this.transform.localScale = new Vector3 (0.0f, 0.0f, 0.0f);
+    gameObject.layer = LayerMask.NameToLayer("NoHantei");
   }
 
   public void eatMob(string eatenMob, int exp){
@@ -119,6 +123,7 @@ public class Player : Life {
 
 	// Update is called once per frame
 	void Update () {
+    base.Update();
     float x=0;
     float z=0;
     if((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))){
@@ -158,6 +163,7 @@ public class Player : Life {
       HyouiStart();
     }
     if(Input.GetKeyDown(KeyCode.C)){
+      hp+=hijacked.GetComponent<Life>().hp/2;
       hijacked.GetComponent<Life>().hp=0;
     }
     if(Input.GetKeyDown(KeyCode.M)){
@@ -171,7 +177,7 @@ public class Player : Life {
     }
     if(hp <= 0){
       Destroy(gameObject);
-      SceneManager.LoadScene("GameOver");
+      if(gameOverIdou){SceneManager.LoadScene("GameOver");}
     }
     if (Input.GetMouseButtonDown(0)) {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -183,5 +189,6 @@ public class Player : Life {
         }
     }
     EnablePause();
+    //Debug.Log(_mats.ToString());
 	}
 }

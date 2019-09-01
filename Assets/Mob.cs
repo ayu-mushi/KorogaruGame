@@ -15,6 +15,7 @@ public class Mob : Life {
 
 	// Use this for initialization
 	void Start () {
+    base.Start();
     timeout = 30+UnityEngine.Random.Range(0, 10);
     gameObject.tag = "Mob";
     anim = gameObject.GetComponent<Animator>();
@@ -108,6 +109,7 @@ public class Mob : Life {
     if(colliObj.tag == "Mob" || colliObj.tag == "Player"){
       if(this.canEat(colliObj.GetComponent<Life>())){
         Life foodMob = colliObj.GetComponent<Life>();
+        foodMob.whenAttacked();
         if(gameObject.transform.Find("Player") != null){
           Player player = gameObject.transform.Find("Player").GetComponent<Player>();
           player.eatMob(foodMob.name, foodMob.exp);
@@ -132,8 +134,8 @@ public class Mob : Life {
       }
     }
   }
-
 	void Update () {
+    base.Update();
     if(gameObject.transform.Find("Player") == null){
       Automatic();
     } else {

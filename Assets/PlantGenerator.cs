@@ -34,12 +34,13 @@ public class PlantGenerator : MonoBehaviour
       GenerateN(catNumber,cat);
       GenerateN(lionNumber,lion);
       GenerateN(hunterNumber,hunter);
+      GetPlayerHyoui();
     }
     void GetPlayerHyoui(){
       GameObject dog2 = GameObject.Find("Dog Variant(Clone)");
       GameObject player = GameObject.Find("Player");
       Player playerp = player.GetComponent<Player>();
-      playerp.classInHierarchy = 6;
+      playerp.level=6;
       playerp.OnHyouiLaserCollision(dog2);
     }
     float genCount;

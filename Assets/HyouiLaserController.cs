@@ -16,9 +16,11 @@ public class HyouiLaserController : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision col){
-      Debug.Log("当たったよ");
+      //Debug.Log("当たったよ");
+      if(col.gameObject.tag=="Mob"){
       Player player = gameObject.transform.parent.gameObject.GetComponent<Player>();
       player.OnHyouiLaserCollision(col.gameObject);
       Destroy(gameObject);
+      }
     }
 }

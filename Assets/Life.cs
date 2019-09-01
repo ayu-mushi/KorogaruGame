@@ -33,4 +33,45 @@ public class Life : MonoBehaviour
       int diff = this.classInHierarchy - l.classInHierarchy;
       return (diff <= 1 && 0 < diff);
     }
+
+    protected Dictionary<Material, Color> _mats;
+    protected void DetectAllRenderer(GameObject target)
+    {
+        _mats = new Dictionary<Material, Color>();
+        Renderer[] renderers = target.GetComponentsInChildren<Renderer>();
+        foreach (Renderer render in renderers)//レンダラーすべてを調べる
+        {
+
+            foreach (Material material in render.materials)//マテリアルすべてを調査
+            {
+                if (material.HasProperty("_Color"))
+                {
+                    _mats.Add(material, material.color);
+                    break;
+                }
+            }
+        }
+    }
+  float flickerStop=0;
+  public void whenAttacked(){
+    flickerStop = Time.time + 3;
+  }
+  public virtual void Update(){
+     if(_mats!=null){
+       if( flickerStop < Time.time){
+         foreach(KeyValuePair<Material, Color> kvp in _mats){
+           kvp.Key.color = kvp.Value;
+         }
+       }
+       else {
+          Color flickerColor = new Color(Mathf.Sin(Time.time)/2+0.5f, 0, 0, 0);
+          foreach(KeyValuePair<Material, Color> kvp in _mats){
+            kvp.Key.color = kvp.Value + flickerColor;
+          }
+       }
+     }
+  }
+  public virtual void Start(){
+    DetectAllRenderer(gameObject);
+  }
 }
