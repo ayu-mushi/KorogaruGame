@@ -12,8 +12,8 @@ public class Life : MonoBehaviour
     public int maxHp;
     void Jump(){
     }
-    public void initializeMaxHp(){
-      maxHp = (int)(initialHp * 1.5);
+    public void initializeHp(){
+      hp = (int)(maxHp*0.8f);
     }
     public void Parthenogenesis() { // 単為生殖
       Jump();
@@ -31,7 +31,14 @@ public class Life : MonoBehaviour
     }
     public bool canEat(Life l){
       int diff = this.classInHierarchy - l.classInHierarchy;
-      return (diff <= 1 && 0 < diff);
+      bool result;
+      if(this.classInHierarchy > 2){
+         result = (diff <= 2 && 0 < diff);
+      }
+      else {
+         result = (diff <= 1 && 0 < diff);
+      }
+      return result;
     }
 
     protected Dictionary<Material, Color> _mats;
@@ -54,7 +61,7 @@ public class Life : MonoBehaviour
     }
   float flickerStop=0;
   public void whenAttacked(){
-    flickerStop = Time.time + 3;
+    flickerStop = Time.time + 0.7f;
   }
   public virtual void Update(){
      if(_mats!=null){
@@ -64,7 +71,7 @@ public class Life : MonoBehaviour
          }
        }
        else {
-          Color flickerColor = new Color(Mathf.Sin(Time.time)/2+0.5f, 0, 0, 0);
+          Color flickerColor = new Color(2*(Mathf.Sin(Time.time*100)+1f), 0, 0, 0);
           foreach(KeyValuePair<Material, Color> kvp in _mats){
             kvp.Key.color = kvp.Value + flickerColor;
           }

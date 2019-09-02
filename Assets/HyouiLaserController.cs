@@ -15,7 +15,7 @@ public class HyouiLaserController : MonoBehaviour
         transform.localScale += new Vector3(0,0,Time.deltaTime*5);
     }
 
-    private void OnCollisionEnter(Collision col){
+    private void OnTriggerEnter(Collider col){
       //Debug.Log("当たったよ");
       if(col.gameObject.tag=="Mob"){
       Player player = gameObject.transform.parent.gameObject.GetComponent<Player>();

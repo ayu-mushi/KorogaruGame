@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d9d2c330510439d8328dbed2b15f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 5000
+  hp: 0
   classInHierarchy: 2
   exp: 10
   initialHp: 0
-  maxHp: 0
+  maxHp: 5000
 --- !u!1001 &7993435109513122489
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36,6 +36,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Constraints
       value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 54606055775698280, guid: aa2d47f95b34fbe4d9cbe095f13585b5,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4333491988720984, guid: aa2d47f95b34fbe4d9cbe095f13585b5, type: 3}
       propertyPath: m_LocalPosition.x

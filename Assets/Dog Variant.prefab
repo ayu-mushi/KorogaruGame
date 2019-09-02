@@ -28,11 +28,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d9d2c330510439d8328dbed2b15f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 5000
+  hp: 0
   classInHierarchy: 2
   exp: 10
   initialHp: 0
-  maxHp: 0
+  maxHp: 5000
 --- !u!54 &5520297183914782561
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -63,6 +63,11 @@ PrefabInstance:
     - target: {fileID: 1417258215064542, guid: 7451ef01e53127446b9d7406220542f6, type: 3}
       propertyPath: m_TagString
       value: Mob
+      objectReference: {fileID: 0}
+    - target: {fileID: 114749360120129354, guid: 7451ef01e53127446b9d7406220542f6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4343527246573924, guid: 7451ef01e53127446b9d7406220542f6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -108,16 +113,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 54385426829514116, guid: 7451ef01e53127446b9d7406220542f6,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 112
-      objectReference: {fileID: 0}
-    - target: {fileID: 114749360120129354, guid: 7451ef01e53127446b9d7406220542f6,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 65449959130551738, guid: 7451ef01e53127446b9d7406220542f6,
         type: 3}
       propertyPath: m_Size.y
@@ -127,6 +122,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Center.y
       value: 0.6574566
+      objectReference: {fileID: 0}
+    - target: {fileID: 54385426829514116, guid: 7451ef01e53127446b9d7406220542f6,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 54385426829514116, guid: 7451ef01e53127446b9d7406220542f6, type: 3}

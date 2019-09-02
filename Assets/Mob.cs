@@ -20,8 +20,13 @@ public class Mob : Life {
     gameObject.tag = "Mob";
     anim = gameObject.GetComponent<Animator>();
     initialHp = hp;
-    this.initializeMaxHp();
+    if(hp==0){this.initializeHp();}
     hpSlider = transform.Find("HPCanvasPrefab/HPSlider").gameObject.GetComponent<Slider>();
+  }
+  public String Show (){
+    return ("" + gameObject.name + 
+        "("+ hp.ToString() + ""
+        + "/" + maxHp.ToString() + ")");
   }
   public void Move(float x, float z){
     transform.Rotate(new Vector3(0,x*Time.deltaTime*60,0));
@@ -113,7 +118,6 @@ public class Mob : Life {
         if(gameObject.transform.Find("Player") != null){
           Player player = gameObject.transform.Find("Player").GetComponent<Player>();
           player.eatMob(foodMob.name, foodMob.exp);
-          player.refreshPlayerExp();
         }
         int beforeHP = foodMob.hp;
         int afterHp = foodMob.hp - 1000;
@@ -129,7 +133,6 @@ public class Mob : Life {
         if(gameObject.transform.Find("Player") != null){
           Player player = gameObject.transform.Find("Player").GetComponent<Player>();
           player.eatMob(foodPlant.name, foodPlant.exp);
-          player.refreshPlayerExp();
         }
       }
     }

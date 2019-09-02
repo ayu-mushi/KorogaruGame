@@ -6,35 +6,51 @@ using UnityStandardAssets.Cameras;
 using UnityEngine.SceneManagement;
 
 public class Player : Life {
+  //オンライン化に必要なコンポーネントを設定
+  //public PhotonView myPV;
+  //public PhotonTransformView myPTV;
+
+  //private Camera mainCam;
 
   GameObject hijacked;
   GameObject camera;
   public int level=1;
   int playerExp;
   Text playerHpText;
-  public Text playerExpTextObj;
   Text playerExpText;
-  public Text levelTextObj;
   Text levelText;
   public GameObject hyouiLaser;
+  public GameObject blockObj;
+  public GameObject wakiBlockObj;
   Text descriptionText;
   public bool gameOverIdou;
 
-
+	GameObject pauseUI;
 	void Start () {
+    /*if (!myPV.isMine)    //自キャラであれば実行
+    {return;}*/
     base.Start();
-    camera = GameObject.Find("Camera");
-    playerExpText = playerExpTextObj.GetComponent<Text>();
-    levelText = levelTextObj.GetComponent<Text>();
+
+    pauseUI = GameObject.Find("Pause");
+    pauseUI.SetActive(false);
+    /*//MainCameraのtargetにこのゲームオブジェクトを設定
+    mainCam = Camera.main;
+    mainCam.transform.parent = gameObject.transform;*/
+
+    camera = transform.Find("Camera").gameObject;
+    playerExpText = GameObject.Find("Exp").GetComponent<Text>();
+    levelText = GameObject.Find("Level").GetComponent<Text>();
     descriptionText = GameObject.Find("Description").GetComponent<Text>();
     playerHpText = GameObject.Find("PlayerHP").GetComponent<Text>();
-    refreshLevel();
-    refreshPlayerExp();
+    refreshLevel(0);
+    refreshPlayerExp(0);
 	}
-  public void refreshLevel(){
+  public void refreshLevel(int diff){
+    level += diff;
     levelText.text = "レベル:" + level.ToString();
   }
-  public void refreshPlayerExp(){
+  public void refreshPlayerExp(int diff){
+    playerExp += diff;
     playerExpText.text = "経験値:" + playerExp.ToString();
   }
 	public void OnHyouiLaserCollision(GameObject obj) {
@@ -44,7 +60,7 @@ public class Player : Life {
       camera.transform.parent = obj.transform;
       camera.transform.rotation = obj.transform.rotation;
       this.transform.parent = hijacked.transform;
-      hijacked.transform.parent =null;
+            hijacked.transform.parent =null;
       camera.transform.position = obj.transform.position;
       camera.transform.Translate(new Vector3(0, 4, -10));
       this.dependentMode();
@@ -78,6 +94,25 @@ public class Player : Life {
     hyoui.transform.localPosition = hyoui.transform.position;
     hyoui.transform.localEulerAngles = hyoui.transform.eulerAngles;
   }
+  void MakeBlock(){
+    if(playerExp < 2) {return;}
+    refreshPlayerExp(-2);
+    GameObject jibun;
+    if(isHijacked()){
+      jibun = hijacked;
+    } else {
+      jibun = gameObject;
+    }
+    GameObject block;
+    if(Random.RandomRange(0, 100) > 10){
+      block= Instantiate(blockObj) as GameObject;
+    } else{
+      block= Instantiate(wakiBlockObj) as GameObject;
+    }
+    block.transform.parent = jibun.transform;
+    block.transform.localPosition = block.transform.position;
+    block.transform.localEulerAngles = block.transform.eulerAngles;
+  }
 
   public void independentMode(){
     this.transform.localScale = new Vector3 (1f, 1f, 1f);
@@ -86,26 +121,24 @@ public class Player : Life {
 
   public void dependentMode(){
     this.transform.localScale = new Vector3 (0.0f, 0.0f, 0.0f);
+    this.transform.localPosition = new Vector3(0,0,0);
+    this.transform.localEulerAngles = new Vector3(0,0,0);
     gameObject.layer = LayerMask.NameToLayer("NoHantei");
   }
 
   public void eatMob(string eatenMob, int exp){
-    Debug.Log(eatenMob);
-    playerExp += exp;
-    Debug.Log(playerExp);
+    //Debug.Log(eatenMob);
+    refreshPlayerExp(exp);
+    //Debug.Log(playerExp);
   }
 
   void LevelUpIfPossible(){
     if(playerExp >= 20){
-      level +=1;
-      playerExp -= 20;
-      refreshLevel();
-      refreshPlayerExp();
+      refreshLevel(1);
+      refreshPlayerExp(-20);
     }
   }
 
-	[SerializeField]
-	public GameObject pauseUI;
 	void EnablePause(){
 		if (Input.GetKeyDown ("q")) {
 			//　ポーズUIのアクティブ、非アクティブを切り替え
@@ -123,17 +156,30 @@ public class Player : Life {
 
 	// Update is called once per frame
 	void Update () {
+        /*if (!myPV.isMine)
+        {
+            return;
+        }*/
+
     base.Update();
     float x=0;
     float z=0;
+    x = Input.GetAxis("Horizontal");
     if((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))){
       float y = Input.GetAxis("Vertical");
       camera.transform.Rotate(-y, 0, 0);
+
+      if(isHijacked()){
+        hijacked.transform.Translate(x*Time.deltaTime*8, 0, 0);
+      }
+      else {
+        transform.Translate(x*Time.deltaTime*8, 0, 0);
+      }
+      x=0;
     }
     else{
       z = Input.GetAxis("Vertical");
     }
-    x = Input.GetAxis("Horizontal");
     Move(x, z);
 
     if(Input.GetButtonDown("Jump")){
@@ -160,7 +206,12 @@ public class Player : Life {
     LevelUpIfPossible();
 
     if(Input.GetKeyDown(KeyCode.Z)){
+      if(transform.Find("hyouiLaserPivot(Clone)") == null)
       HyouiStart();
+      else Destroy(transform.Find("hyouiLaserPivot(Clone)").gameObject);
+    }
+    if(Input.GetKeyDown(KeyCode.B)){
+      MakeBlock();
     }
     if(Input.GetKeyDown(KeyCode.C)){
       hp+=hijacked.GetComponent<Life>().hp/2;
@@ -169,10 +220,11 @@ public class Player : Life {
     if(Input.GetKeyDown(KeyCode.M)){
       maxHp=1000000;
       hp=100000;
-      level=6;
-      refreshLevel();
+      refreshPlayerExp(19);
+      refreshLevel(6);
     }
     if(transform.position.y < -40){
+      Debug.Log("落下死");
       hp=0;
     }
     if(hp <= 0){
@@ -180,13 +232,15 @@ public class Player : Life {
       if(gameOverIdou){SceneManager.LoadScene("GameOver");}
     }
     if (Input.GetMouseButtonDown(0)) {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit = new RaycastHit();
+      Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+      RaycastHit hit = new RaycastHit();
 
-        if (Physics.Raycast(ray, out hit)) {
-          GameObject clickedGameObject = hit.collider.gameObject;
-          descriptionText.text = clickedGameObject.ToString();
+      if (Physics.Raycast(ray, out hit)) {
+        GameObject clickedGameObject = hit.collider.gameObject;
+        if(clickedGameObject.tag == "Mob"){
+          descriptionText.text = clickedGameObject.GetComponent<Mob>().Show();
         }
+      }
     }
     EnablePause();
     //Debug.Log(_mats.ToString());

@@ -337,6 +337,12 @@
  <Reference Include="UnityEditor.iOS.Extensions">
  <HintPath>/home/ayu-mushi/Unity/Hub/Editor/2019.2.0f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
  </Reference>
+ <Reference Include="Photon3Unity3D">
+ <HintPath>/home/ayu-mushi/program/New Unity Project 3/Assets/Plugins/Photon3Unity3D.dll</HintPath>
+ </Reference>
+ <Reference Include="websocket-sharp">
+ <HintPath>/home/ayu-mushi/program/New Unity Project 3/Assets/Plugins/WebSocket/websocket-sharp.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>/home/ayu-mushi/program/New Unity Project 3/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>

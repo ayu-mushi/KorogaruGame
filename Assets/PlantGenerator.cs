@@ -34,7 +34,6 @@ public class PlantGenerator : MonoBehaviour
       GenerateN(catNumber,cat);
       GenerateN(lionNumber,lion);
       GenerateN(hunterNumber,hunter);
-      GetPlayerHyoui();
     }
     void GetPlayerHyoui(){
       GameObject dog2 = GameObject.Find("Dog Variant(Clone)");
@@ -99,12 +98,25 @@ public class PlantGenerator : MonoBehaviour
     public void Generate(GameObject nanika)
     {
         GameObject newplant = Instantiate(nanika);
-        Vector3 pos = newplant.transform.position;
         if(sizeViewer==null){Debug.Log("sizeViewerがnull");}
         else{
-        pos.x = Random.RandomRange(transform.position.x, transform.position.x + sizeViewer.lossyScale.x);
-        pos.y = 2;
-        pos.z = Random.RandomRange(transform.position.z, transform.position.z + sizeViewer.lossyScale.z);
+        Vector3 origin = transform.position;
+        Vector3 hantaikaku_vector = new Vector3(sizeViewer.lossyScale.x, 0, sizeViewer.lossyScale.z);
+        Vector3 end = origin + transform.rotation * hantaikaku_vector;
+        /*float kaiten = transform.eulerAngles.y * Mathf.Deg2Rad;
+        Debug.Log(kaiten);
+        Vector3 kaitened_vector = new Vector3 (Mathf.Cos(kaiten) * end.x - Mathf.Sin(kaiten) * end.z,
+            0,
+                           Mathf.Sin(kaiten) * end.x + Mathf.Cos(kaiten) * end.z);
+        end = origin + kaitened_vector;*/
+
+        Vector3 hanni_vector = new Vector3(0, 0, 0);
+        hanni_vector.x = Random.RandomRange(0.5f, hantaikaku_vector.x-1);
+        hanni_vector.y = 0;
+        hanni_vector.z = Random.RandomRange(0.5f, hantaikaku_vector.z-1);
+        Vector3 pos = origin + transform.rotation * hanni_vector;
+
+
         newplant.transform.position = pos;
         //newplant.transform.parent = transform;
         //hyoui.transform.localPosition = hyoui.transform.position;
