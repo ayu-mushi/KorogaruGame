@@ -24,7 +24,7 @@ public class Mob : Life {
     hpSlider = transform.Find("HPCanvasPrefab/HPSlider").gameObject.GetComponent<Slider>();
   }
   public String Show (){
-    return ("" + gameObject.name + 
+    return ("" + gameObject.name +
         "("+ hp.ToString() + ""
         + "/" + maxHp.ToString() + ")");
   }
@@ -47,6 +47,24 @@ public class Mob : Life {
     this.hp -= 5;
   }
 
+  GameObject nerai;
+  public void OnSakutekiStay(Collider col, Transform nerai_hanni){
+    if(col.gameObject.tag == "Player" || col.gameObject.tag == "Mob" ||
+        col.gameObject.tag =="Plant"){
+      if(this.canEat(col.gameObject.GetComponent<Life>()) && nerai==null){
+        nerai = col.gameObject;
+        Debug.Log("索敵入る");
+        nerai_hanni.localScale = new Vector3(10, 0.0537f, 10);
+      }
+    }
+  }
+  public void OnSakutekiExit(Collider col, Transform nerai_hanni){
+    if(col.gameObject==nerai){
+      nerai = null;
+      Debug.Log("索敵出る");
+      nerai_hanni.transform.localScale = new Vector3(5,0.037f,5);
+    }
+  }
   void Automatic(){
     timeElapsed += Time.deltaTime;
     if(hp > this.maxHp){
@@ -60,7 +78,16 @@ public class Mob : Life {
       }
     }
 
-    RaycastHit hits_forward = shotRay(Vector3.forward, Vector3.up*0.7f, Color.blue, 4);
+    if(nerai != null) {
+      Vector3 diffVect = nerai.transform.position - transform.position;
+      Quaternion targetRotation = Quaternion.LookRotation(new Vector3(diffVect.x, 0, diffVect.z));
+      transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+      Debug.Log("角度"+(transform.eulerAngles - targetRotation.eulerAngles).ToString());
+      Debug.Log("長さ"+Math.Abs(Mathf.Cos((transform.rotation.eulerAngles.y  - targetRotation.eulerAngles.y )* Mathf.Deg2Rad)).ToString());
+      this.Move(0, Math.Abs(Mathf.Cos((transform.rotation.eulerAngles.y  - targetRotation.eulerAngles.y )* Mathf.Deg2Rad)));
+    }
+
+   /* RaycastHit hits_forward = shotRay(Vector3.forward, Vector3.up*0.7f, Color.blue, 4);
     if (hits_forward.collider != null &&
         (hits_forward.collider.gameObject.tag == "Mob" || hits_forward.collider.gameObject.tag == "Plant" || hits_forward.collider.tag == "Player")){
       if (this.canEat(hits_forward.collider.gameObject.GetComponent<Life>())){
@@ -86,7 +113,7 @@ public class Mob : Life {
       } else {
         this.Move(1, 0);
       }
-    }
+    }*/
   }
 
   RaycastHit shotRay(Vector3 dir, Vector3 pos, Color color, int distance){
@@ -109,40 +136,68 @@ public class Mob : Life {
   public void OnEatOther(GameObject other){
     Debug.Log("捕食！");
   }
-  void OnCollisionEnter (Collision collision){
-    GameObject colliObj = collision.gameObject;
-    if(colliObj.tag == "Mob" || colliObj.tag == "Player"){
-      if(this.canEat(colliObj.GetComponent<Life>())){
-        Life foodMob = colliObj.GetComponent<Life>();
-        foodMob.whenAttacked();
-        if(gameObject.transform.Find("Player") != null){
-          Player player = gameObject.transform.Find("Player").GetComponent<Player>();
-          player.eatMob(foodMob.name, foodMob.exp);
-        }
-        int beforeHP = foodMob.hp;
-        int afterHp = foodMob.hp - 1000;
-        foodMob.hp = afterHp;
-        if(afterHp <= 0) { this.hp += beforeHP; }
+
+  IEnumerator eatProcess(GameObject colliObj){
+    while(true){
+      if(colliObj == null) {
+        transform.Find("Sakuteki").localScale = new Vector3(5,0.0537f,5);
+        yield break;
       }
-    }
-    else if(colliObj.tag == "Plant"){
-      if(this.canEat(colliObj.GetComponent<Life>())){
-        PlantController foodPlant = colliObj.GetComponent<PlantController>();
-        this.hp += foodPlant.hp;
-        foodPlant.hp = 0;
-        if(gameObject.transform.Find("Player") != null){
-          Player player = gameObject.transform.Find("Player").GetComponent<Player>();
-          player.eatMob(foodPlant.name, foodPlant.exp);
+      if(colliObj.tag == "Mob" || colliObj.tag == "Player"){
+        if(this.canEat(colliObj.GetComponent<Life>())){
+          Life foodMob = colliObj.GetComponent<Life>();
+          foodMob.whenAttacked();
+          if(gameObject.transform.Find("Player(Clone)") != null){
+            Player player = gameObject.transform.Find("Player(Clone)").GetComponent<Player>();
+            player.eatMob(foodMob.name, foodMob.exp);
+          }
+          int beforeHP = foodMob.hp;
+          int afterHp = foodMob.hp - 1000;
+          foodMob.hp = afterHp;
+          if(afterHp <= 0) { this.hp += beforeHP; }
         }
       }
+      else if(colliObj.tag == "Plant"){
+        if(this.canEat(colliObj.GetComponent<Life>())){
+          PlantController foodPlant = colliObj.GetComponent<PlantController>();
+          this.hp += foodPlant.hp;
+          foodPlant.hp = 0;
+          if(gameObject.transform.Find("Player(Clone)") != null){
+            Player player = gameObject.transform.Find("Player(Clone)").GetComponent<Player>();
+            player.eatMob(foodPlant.name, foodPlant.exp);
+          }
+        }
+      }
+      yield return new WaitForSeconds(0.5f);
     }
   }
+
+  IEnumerator eatingRoutine;
+  void OnCollisionEnter (Collision collision){
+    eatingRoutine = eatProcess(collision.gameObject);
+    StartCoroutine(eatingRoutine);
+  }
+  void OnCollisionExit (Collision collision){
+    StopCoroutine(eatingRoutine);
+  }
+  public bool isAutomatic;
 	void Update () {
     base.Update();
-    if(gameObject.transform.Find("Player") == null){
+    if(gameObject.transform.Find("Player(Clone)") == null){
       Automatic();
     } else {
+      if(Input.GetKeyDown("l")){
+        isAutomatic=true;
+      }
     }
+
+    if(isAutomatic){
+      Automatic();
+      if(Input.GetKeyUp("l")){
+        isAutomatic=false;
+      }
+    }
+
 
     if(transform.position.y < -40){
       hp=0;
@@ -150,8 +205,8 @@ public class Mob : Life {
     hpSlider.maxValue = maxHp;
     hpSlider.value = hp;
     if(hp <= 0){
-      if(gameObject.transform.Find("Player") != null){
-        Transform player = gameObject.transform.Find("Player");
+      if(gameObject.transform.Find("Player(Clone)") != null){
+        Transform player = gameObject.transform.Find("Player(Clone)");
         player.parent = null;
         Transform camera=gameObject.transform.Find("Camera");
         camera.parent = player;

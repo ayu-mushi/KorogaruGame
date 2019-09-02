@@ -57,7 +57,6 @@
   <ItemGroup>
      <Compile Include="Assets\BlockController.cs" />
      <Compile Include="Assets\CallAttack.cs" />
-     <Compile Include="Assets\CameraController.cs" />
      <Compile Include="Assets\GameManagerScript.cs" />
      <Compile Include="Assets\GameOverController.cs" />
      <Compile Include="Assets\HyouiLaserController.cs" />
@@ -212,6 +211,7 @@
      <Compile Include="Assets\PlantController.cs" />
      <Compile Include="Assets\PlantGenerator.cs" />
      <Compile Include="Assets\Player.cs" />
+     <Compile Include="Assets\Sakuteki.cs" />
      <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
      <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
      <Compile Include="Assets\SampleScenes\Menu\Scripts\SceneAndURLLoader.cs" />

@@ -26,7 +26,7 @@ public class Life : MonoBehaviour
       childLife.maxHp = this.maxHp;
       if(child.transform.Find("Camera") != null){
         Destroy(child.transform.Find("Camera").gameObject);
-        Destroy(child.transform.Find("Player").gameObject);
+        Destroy(child.transform.Find("Player(Clone)").gameObject);
       }
     }
     public bool canEat(Life l){

@@ -37,7 +37,7 @@ public class PlantGenerator : MonoBehaviour
     }
     void GetPlayerHyoui(){
       GameObject dog2 = GameObject.Find("Dog Variant(Clone)");
-      GameObject player = GameObject.Find("Player");
+      GameObject player = GameObject.Find("Player(Clone)");
       Player playerp = player.GetComponent<Player>();
       playerp.level=6;
       playerp.OnHyouiLaserCollision(dog2);
