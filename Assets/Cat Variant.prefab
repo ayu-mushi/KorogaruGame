@@ -17,6 +17,7 @@ MonoBehaviour:
   exp: 10
   initialHp: 0
   maxHp: 5000
+  ATK: 1000
   isAutomatic: 0
 --- !u!1001 &6143966820955210616
 PrefabInstance:
@@ -111,6 +112,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mass
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54606055775698280, guid: aa2d47f95b34fbe4d9cbe095f13585b5,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4333491988720984, guid: aa2d47f95b34fbe4d9cbe095f13585b5, type: 3}
       propertyPath: m_LocalPosition.x

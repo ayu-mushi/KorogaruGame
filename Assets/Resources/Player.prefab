@@ -135,7 +135,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.2022072, g: 0.5915496, b: 0.6698113, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -301,11 +301,9 @@ MonoBehaviour:
   level: 1
   hyouiLaser: {fileID: 8239515897307839116, guid: 6e82d3c641991ba47a3237d2fa8c1536,
     type: 3}
-  blockObj: {fileID: 7732729093016716700, guid: 740478c4975b5400787e0efa3a214102,
-    type: 3}
-  wakiBlockObj: {fileID: 6482043654947578567, guid: 1fc45b65ce79bd5629821524e2469a3e,
-    type: 3}
   gameOverIdou: 1
+  itembox: {fileID: 0}
+  canMultipleJump: 1
 --- !u!54 &1372422645317963785
 Rigidbody:
   m_ObjectHideFlags: 0

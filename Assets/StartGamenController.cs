@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
  
-public class StartGamenController : Photon.PunBehaviour
+public class StartGamenController : MonoBehaviour//Photon.PunBehaviour
 {
 /*    #region Public変数定義
  

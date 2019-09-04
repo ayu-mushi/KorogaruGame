@@ -20,6 +20,7 @@ public class PlantGenerator : MonoBehaviour
     public int chickenNumber;
     public GameObject hunter;
     public int hunterNumber;
+    public bool isExpt;
 
     Transform sizeViewer;
 
@@ -62,11 +63,17 @@ public class PlantGenerator : MonoBehaviour
         maxCount = 0.1f;
       }
       else {
-        maxCount = 1/(N*0.1f); ///(N*(r*N*(1-(N/K))));
+        if(isExpt) {maxCount = 1/(N*0.1f); ///(N*(r*N*(1-(N/K))));
+        } else {
+          maxCount = 0.8f;
+        }
       }
       if(genCount > maxCount){
         Generate(plant);
         genCount = 0;
+      }
+      if((countMobs("Plant") > 20)&& countMobs("Penguin") == 0){
+        GenerateN(1,penguin);
       }
       if((countMobs("Penguin") > 20 || countMobs("Chicken") > 20)&& countMobs("Cat") == 0){
         GenerateN(1,cat);

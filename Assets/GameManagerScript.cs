@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManagerScript : Photon.PunBehaviour
+public class GameManagerScript : MonoBehaviour//Photon.PunBehaviour
 {
     public GameObject playerPrefab;
     // Start is called before the first frame update

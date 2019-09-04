@@ -33,6 +33,9 @@ MonoBehaviour:
   exp: 10
   initialHp: 0
   maxHp: 5000
+  canMultipleJump: 0
+  ATK: 1000
+  eatSpeed: 0.2
   isAutomatic: 0
 --- !u!54 &5520297183914782561
 Rigidbody:

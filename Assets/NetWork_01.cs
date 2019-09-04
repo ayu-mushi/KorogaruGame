@@ -2,7 +2,7 @@
 using System.Collections;
  
 public class NetWork_01 : MonoBehaviour {
- 
+/* 
     void Start() {
         // Photonに接続する(引数でゲームのバージョンを指定できる)
         PhotonNetwork.ConnectUsingSettings(null);
@@ -28,5 +28,5 @@ public class NetWork_01 : MonoBehaviour {
         // ルームがないと入室に失敗するため、その時は自分で作る
         // 引数でルーム名を指定できる
         PhotonNetwork.CreateRoom("myRoomName");
-    }
+    }*/
 }

@@ -29,6 +29,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0427578, y: 0.04855951, z: 0.084390774}
   m_Center: {x: -0.005306079, y: 0.0044590505, z: 0.042195387}
+--- !u!208 &4420599329873887658
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5866988302926198417}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.021000002, y: 0.024, z: 0.042000003}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.0050000004, y: 0.004, z: 0.042000003}
+  m_TimeToStationary: 0.5
 --- !u!114 &1707330288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55,7 +71,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: fcfffeb6df10e9a41809549501f34d1f, type: 3}
       propertyPath: m_Name
-      value: prefab Variant
+      value: Plant  Variant
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: fcfffeb6df10e9a41809549501f34d1f, type: 3}
       propertyPath: m_TagString

@@ -20,16 +20,16 @@ public class Player : Life {
   Text playerExpText;
   Text levelText;
   public GameObject hyouiLaser;
-  public GameObject blockObj;
-  public GameObject wakiBlockObj;
   Text descriptionText;
   public bool gameOverIdou;
+  public GameObject itembox;
 
 	GameObject pauseUI;
 	void Start () {
     /*if (!myPV.isMine)    //自キャラであれば実行
     {return;}*/
     base.Start();
+
 
     pauseUI = GameObject.Find("Pause");
     pauseUI.SetActive(false);
@@ -38,6 +38,7 @@ public class Player : Life {
     mainCam.transform.parent = gameObject.transform;*/
 
     camera = transform.Find("Camera").gameObject;
+    itembox = GameObject.Find("itembox").gameObject;
     playerExpText = GameObject.Find("Exp").GetComponent<Text>();
     levelText = GameObject.Find("Level").GetComponent<Text>();
     descriptionText = GameObject.Find("Description").GetComponent<Text>();
@@ -64,15 +65,26 @@ public class Player : Life {
       camera.transform.position = obj.transform.position;
       camera.transform.Translate(new Vector3(0, 4, -10));
       this.dependentMode();
+      Destroy(hijacked.GetComponent<UnityEngine.AI.NavMeshAgent>());
     }
 	}
   bool isHijacked(){
     return (hijacked!=null);
   }
+
+  bool is_on_terrain = true;
+  void OnCollisionEnter(Collision collision){
+   if(collision.gameObject.tag == "Terrain"){
+      is_on_terrain = true;
+    }
+  }
+  public bool canMultipleJump;
   void Jump(){
     if(isHijacked()){
       hijacked.GetComponent<Mob>().Jump();
     } else {
+      if (!canMultipleJump && !is_on_terrain) return;
+      is_on_terrain = false;
       GetComponent<Rigidbody>().AddForce(0, 500, 0);
     }
   }
@@ -95,6 +107,7 @@ public class Player : Life {
     hyoui.transform.localEulerAngles = hyoui.transform.eulerAngles;
   }
   void MakeBlock(){
+    Debug.Log(itembox.GetComponent<ItemboxController>().focusPrefab().name);
     if(playerExp < 2) {return;}
     refreshPlayerExp(-2);
     GameObject jibun;
@@ -104,11 +117,7 @@ public class Player : Life {
       jibun = gameObject;
     }
     GameObject block;
-    if(Random.RandomRange(0, 100) > 10){
-      block= Instantiate(blockObj) as GameObject;
-    } else{
-      block= Instantiate(wakiBlockObj) as GameObject;
-    }
+    block= Instantiate(itembox.GetComponent<ItemboxController>().focusPrefab()) as GameObject;
     block.transform.parent = jibun.transform;
     block.transform.localPosition = block.transform.position;
     block.transform.localEulerAngles = block.transform.eulerAngles;
@@ -154,6 +163,7 @@ public class Player : Life {
 		}
   }
 
+  
 	// Update is called once per frame
 	void Update () {
         /*if (!myPV.isMine)
@@ -228,6 +238,7 @@ public class Player : Life {
       hp=0;
     }
     if(hp <= 0){
+      camera.transform.parent = null;
       Destroy(gameObject);
       if(gameOverIdou){SceneManager.LoadScene("GameOver");}
     }
