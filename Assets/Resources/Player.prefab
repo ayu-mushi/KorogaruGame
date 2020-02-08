@@ -303,6 +303,7 @@ MonoBehaviour:
     type: 3}
   gameOverIdou: 1
   itembox: {fileID: 0}
+  rigidbody: {fileID: 1372422645317963785}
   canMultipleJump: 1
 --- !u!54 &1372422645317963785
 Rigidbody:

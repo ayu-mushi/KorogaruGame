@@ -23,6 +23,7 @@ public class Player : Life {
   Text descriptionText;
   public bool gameOverIdou;
   public GameObject itembox;
+  public Rigidbody rigidbody;
 
 	GameObject pauseUI;
 	void Start () {
@@ -107,7 +108,6 @@ public class Player : Life {
     hyoui.transform.localEulerAngles = hyoui.transform.eulerAngles;
   }
   void MakeBlock(){
-    Debug.Log(itembox.GetComponent<ItemboxController>().focusPrefab().name);
     if(playerExp < 2) {return;}
     refreshPlayerExp(-2);
     GameObject jibun;
@@ -125,6 +125,7 @@ public class Player : Life {
 
   public void independentMode(){
     this.transform.localScale = new Vector3 (1f, 1f, 1f);
+    rigidbody.isKinematic=false;
     gameObject.layer = LayerMask.NameToLayer("Default");
   }
 
@@ -132,6 +133,7 @@ public class Player : Life {
     this.transform.localScale = new Vector3 (0.0f, 0.0f, 0.0f);
     this.transform.localPosition = new Vector3(0,0,0);
     this.transform.localEulerAngles = new Vector3(0,0,0);
+    rigidbody.isKinematic=true;
     gameObject.layer = LayerMask.NameToLayer("NoHantei");
   }
 

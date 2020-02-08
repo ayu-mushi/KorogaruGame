@@ -17,7 +17,9 @@ MonoBehaviour:
   exp: 10
   initialHp: 0
   maxHp: 2000
+  canMultipleJump: 1
   ATK: 1000
+  eatSpeed: 0.4
   isAutomatic: 0
 --- !u!1001 &242643765983382695
 PrefabInstance:

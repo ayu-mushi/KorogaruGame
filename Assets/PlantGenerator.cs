@@ -36,6 +36,26 @@ public class PlantGenerator : MonoBehaviour
       GenerateN(lionNumber,lion);
       GenerateN(hunterNumber,hunter);
     }
+    /*void OnCollisionEnter(Collision other){
+      if(other.gameObject.name.Contains("WakiSheet")
+          && other.gameObject.GetComponent<Rigidbody>().isKinematic
+          && gameObject.GetComponent<Rigidbody>().isKinematic){
+        Debug.Log("plantGen vs. plantGen");
+        if((transform.position.x - other.transform.position.x) > 5
+          &&(transform.position.y - other.transform.position.y) > 5){
+          Destroy(other.gameObject);
+        }
+        if((transform.position.x - other.transform.position.x) > 5){
+          transform.localScale = transform.localScale + new Vector3 (other.transform.localScale.x, 0, 0);
+          Destroy(other.gameObject);
+        }
+        else if((other.transform.position.y - transform.position.y) > 5){
+          transform.localScale = transform.localScale + new Vector3 (0, other.transform.localScale.y, 0);
+          Destroy(other.gameObject);
+        }
+      }
+    }*/
+
     void GetPlayerHyoui(){
       GameObject dog2 = GameObject.Find("Dog Variant(Clone)");
       GameObject player = GameObject.Find("Player(Clone)");

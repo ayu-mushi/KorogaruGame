@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2798476232792990476}
   m_Layer: 0
   m_Name: PlantGenerator
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,6 +58,7 @@ MonoBehaviour:
   chickenNumber: 1
   hunter: {fileID: 7392850835012130087, guid: 78faf742993774975b26fc8afda8cf47, type: 3}
   hunterNumber: 0
+  isExpt: 0
 --- !u!1 &2798476233957487834
 GameObject:
   m_ObjectHideFlags: 0

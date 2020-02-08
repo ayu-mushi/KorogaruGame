@@ -117,7 +117,14 @@ public class Mob : Life {
     }
 
     bool jimen_flag = isThereJimen();
+
     RaycastHit hits_forward = shotRay(Vector3.forward, Vector3.up*0.7f, Color.blue, 4);
+
+    RaycastHit hits_poison = shotRay(new Vector3(0f, -1f, 0.7f), Vector3.up*2f, Color.green, 4);
+    if(hits_poison.collider != null && hits_poison.collider.gameObject.tag == "Poison"){
+      this.Move(1, 0);
+    }
+
     if (jimen_flag ==true &&
         (hits_forward.collider != null &&
          (hits_forward.collider.gameObject.tag == "Mob"

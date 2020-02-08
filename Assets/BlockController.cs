@@ -22,6 +22,13 @@ public class BlockController : MonoBehaviour
         //rigidbody.useGravity = false;
         rigidbody.isKinematic = true;
         transform.parent = null;
+        Vector3 new_pos =new Vector3 (0,0,0);
+        Vector3 size = transform.lossyScale;
+        new_pos.x = (float)(Mathf.Round(transform.position.x / size.x) * size.x);
+        new_pos.y = (float)(Mathf.Round(transform.position.y / size.y) * size.y)+size.y/2;
+        new_pos.z = (float)(Mathf.Round(transform.position.z / size.z) * size.z);
+        transform.position = new_pos;
+        transform.rotation = Quaternion.identity;
       }
     }
 }
