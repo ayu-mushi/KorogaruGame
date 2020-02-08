@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | New Unity Project 3</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="TemplateData/UnityProgress.js"></script>
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/docs.json", {onProgress: UnityProgress});
+    </script>
+  </head>
+  <body>
+    <div class="webgl-content">
+      <div id="unityContainer" style="width: 960px; height: 600px"></div>
+      <div class="footer">
+        <div class="webgl-logo"></div>
+        <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
+        <div class="title">New Unity Project 3</div>
+        <p>New Unity Project 3
+        矢印キー: ↑↓で上下に移動。→←で左右に回転。 Space: ジャンプ Shift+矢印キー: Shift+↑↓で上下に回転。Shift+→←で左右に水平移動。 Z: レーザーを打つ。そのレーザーが動物に当たったらプレイヤーはその動物に憑依する C: 憑依を解除 X: このキーを押した状態でHPがMAXを超えると単為生殖する B: 経験値を使用してブロックを置く L: 自動モード(憑依した動物のAIで動く) M: 無敵モード(デバッグ用): HPと経験値とレベルを一気に上げる</p>
+      </div>
+    </div>
+  </body>
+</html>
